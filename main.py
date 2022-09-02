@@ -1,18 +1,13 @@
-import email
-from msilib.schema import Error
+
 import os,math
-from turtle import pos, title
-from xml.dom.minidom import TypeInfo
 from werkzeug.utils import secure_filename
 from flask import Flask, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
-from notify_run import Notify
-from flask_mail import Mail
+#from notify_run import Notify
+#from flask_mail import Mail
 import json
 from datetime import date, datetime
 import bcrypt
-
-from sqlalchemy import true
 
 
 local_server = True
@@ -22,6 +17,8 @@ with open('config.json', 'r') as c:
 app = Flask(__name__)
 app.secret_key='super-secret-key'
 app.config['UPLOAD_FOLDER']=params['file_location']
+app.config['ALLOWED_EXTENSIONS'] = params['file_format']
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1000 * 1000
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = '465',
@@ -30,8 +27,8 @@ app.config.update(
     MAIL_PASSWORD = params['psswd']
 )
 
-mail = Mail(app)
-notify=Notify()
+#mail = Mail(app)
+#notify=Notify()
 
 if(local_server):
     app.config['SQLALCHEMY_DATABASE_URI'] = params['local_uri']
@@ -228,9 +225,10 @@ def contact():
         # recipients = [params['mail_id']],
         # body = message + "\n" + phone
         #     )  
-        notify.send('{} have sent a meassage.\n Mob. No. {}.\nmessage-: {} '.format(name,phone,message)) 
+ #       notify.send('{} have sent a meassage.\n Mob. No. {}.\nmessage-: {} '.format(name,phone,message)) 
     return render_template('contact.html', params=params)
 
 
-app.run(debug=True)
-# app.run('0.0.0.0', port=5001,debug=True )
+#app.run(debug=True)
+if __name__ == '__main__':
+  app.run(host='0.0.0.0',port=8080,debug=True)

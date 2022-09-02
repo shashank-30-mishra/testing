@@ -3,8 +3,8 @@
     "params":
     {
         "local_servers": "True",
-        "local_uri": "mysql+pymysql://root:Test12345@34.67.203.207/codingthunder?unix_socket=/cloudsql/bubbly-clarity-352719:us-central1:shaw-db1",
-        "prod_uri": "mysql://root:Knit168412@localhost/codingthunder", 
+        "local_uri": "mysql+pymysql://root:pwd@host/dbname?unix_socket=/cloudsql/coonectionname",
+        "prod_uri": "mysql://root:pwd@localhost/codingthunder", 
         "fb_uri": "https://www.facebook.com/shashank30mishra/",
         "gh_uri": "https://github.com/168412/shawshank",
         "tw_uri": "https://twitter.com/Shashan51491868",

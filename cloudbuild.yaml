@@ -16,6 +16,7 @@ steps:
       - --image=gcr.io/${PROJECT_ID}/${REPO_NAME}:${COMMIT_SHA}
       - --region=us-central1
       - --allow-unauthenticated
+      - --add-cloudsql-instances=bubbly-clarity-352719:us-central1:shaw-db1 
 images:
   - gcr.io/${PROJECT_ID}/${REPO_NAME}:${COMMIT_SHA}
 options:

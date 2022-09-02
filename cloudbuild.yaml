@@ -4,7 +4,7 @@ steps:
     args: ['build','-t','gcr.io/${PROJECT_ID}/${REPO_NAME}:${COMMIT_SHA}','.']
   # push the image to the container registery
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build','push','gcr.io/${PROJECT_ID}/${REPO_NAME}:${COMMIT_SHA}']
+    args: ['push','gcr.io/${PROJECT_ID}/${REPO_NAME}:${COMMIT_SHA}']
 
   # deploy the containerto the cloud run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

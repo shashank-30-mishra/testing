@@ -38,14 +38,14 @@ else:
 db = SQLAlchemy(app)
 
 class Contact(db.Model):
-    Sr_no = db.Column(db.Integer, primary_key=True)
+    sr = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     phone_num = db.Column(db.String(12), nullable=False)
     msg = db.Column(db.String(120), nullable=False)
     date = db.Column(db.String(12), nullable=True)
     email = db.Column(db.String(20), nullable=False)
 
-class User(db.Model):
+class Users(db.Model):
     srno = db.Column(db.Integer,primary_key=True)
     email = db.Column(db.String(20), nullable=False)
     psswd = db.Column(db.String(20), nullable=False)
@@ -55,7 +55,7 @@ class Posts(db.Model):
     '''
     Sr. no., title, slug, content, date
     '''
-    Sr_no = db.Column(db.Integer, primary_key=True)
+    sr  = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     slug = db.Column(db.String(25), nullable=False)
     content = db.Column(db.String(500), nullable=False)
@@ -66,6 +66,7 @@ class Posts(db.Model):
 @app.route("/",methods=['GET'])
 def home():
     posts=Posts.query.filter_by().all()
+   # posts=Posts.execute("""select * from posts """)
     last=math.ceil(len(posts)/int(params['no_post']))
     page=request.args.get('page')
 
@@ -112,7 +113,7 @@ def dashboard():
 @app.route("/user_login", methods=['GET','POST'])
 def user_login():
     if(request.method=='POST'):
-        user = User.query.filter_by(email=request.form.get('user_name')).first()
+        user = Users.query.filter_by(email=request.form.get('user_name')).first()
         userpsswd = request.form.get('user_psswd').encode("utf-8")
         # return user.email
         if user:
@@ -148,16 +149,16 @@ def logout():
     session.pop('user')
     return redirect("/dashboard")
 
-@app.route("/delete/<string:Sr_no>" , methods=['GET', 'POST'])
-def delete(Sr_no):
+@app.route("/delete/<string:sr>" , methods=['GET', 'POST'])
+def delete(sr):
     if('user' in session and session['user']==params['admin_name']):
-        post=Posts.query.filter_by(Sr_no=Sr_no).first()
+        post=Posts.query.filter_by(sr=sr).first()
         db.session.delete(post)
         db.session.commit()
     return redirect("/dashboard")
 
-@app.route("/edit/<string:Sr_no>" , methods=['GET', 'POST'])
-def edit(Sr_no):
+@app.route("/edit/<string:sr>" , methods=['GET', 'POST'])
+def edit(sr):
     if('user' in session and session['user']==params['admin_name']):
         if request.method=='POST':
             box_title=request.form.get('title')
@@ -167,13 +168,13 @@ def edit(Sr_no):
             img=request.form.get('img_file')
             date=datetime.now()
 
-            if Sr_no=='0':
+            if sr=='0':
                 post=Posts(title=box_title,tagline=tagline,slug=slug,content=content, img_file=img,date=date)
                 db.session.add(post)
                 db.session.commit()
 
             else:
-                post=Posts.query.filter_by(Sr_no=Sr_no).first()
+                post=Posts.query.filter_by(sr=sr).first()
                 post.title=box_title
                 post.tagline=tagline
                 post.slug=slug
@@ -181,10 +182,10 @@ def edit(Sr_no):
                 post.img_file=img
                 post.date=date
                 db.session.commit()
-                return redirect("/edit/"+Sr_no)
+                return redirect("/edit/"+sr)
 
-        post = Posts.query.filter_by(Sr_no=Sr_no).first()
-        return render_template('edit.html', params=params,post=post,Sr_no=Sr_no )
+        post = Posts.query.filter_by(sr=sr).first()
+        return render_template('edit.html', params=params,post=post,sr=sr )
         
     return redirect("/dashboard")
     

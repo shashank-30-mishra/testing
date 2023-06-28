@@ -17,7 +17,8 @@
         "admin_name":"fzd224161@gmail.com",
         "admin_psswd":"12345",
         "file_location":"/static/assets/img",
-	"file_format": "{'png', 'jpg', 'jpeg', 'gif'}"
+	    "file_format": "{'png', 'jpg', 'jpeg', 'gif'}",
+        "color": "test1"
         
     }
 

@@ -18,7 +18,7 @@
         "admin_psswd":"12345",
         "file_location":"/static/assets/img",
 	    "file_format": "{'png', 'jpg', 'jpeg', 'gif'}",
-        "color": "test1"
+        "color": "test3"
         
     }
 

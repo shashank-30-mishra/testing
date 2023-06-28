@@ -9,6 +9,7 @@ import json
 from datetime import date, datetime
 import bcrypt
 
+#test2 for the commit 
 
 local_server = True
 with open('config.json', 'r') as c:
